@@ -20,6 +20,14 @@ let now = new Date();
         }
     }
 })();
+events.on("exit", function () {
+    vpnop(0);
+    app.startActivity("console");
+    console.hide();
+    log("虽然脚本停止了");
+
+});
+
 
 //**************************************************************************************** 
 //var weigou = "com.kexunjie.gj.forsystem"
@@ -66,9 +74,9 @@ if (files.createWithDirs("/sdcard/ljl/1.txt")) {
 var 当前版本 = files.read("/sdcard/ljl/1.txt", encoding = "UTF-8");
 setbmd("/storage/emulated/0/sdcard/ljl/")
 
-// var threadId = threads.start(function () {
+var threadId = threads.start(function () {
     循环();
-// })
+})
 
 function 循环() {
     while (1) {
@@ -76,37 +84,37 @@ function 循环() {
     }
 }
 
-// while (1) {
-//     let get_api
-//     let lianjie = "http://39.97.97.160/no/channel/getChannelLink?userCode=10712";
-//     // log("访问===>>" + lianjie);
-//     get_api = (http.get(lianjie));
-//     if (get_api != null && get_api.statusCode == 200) {
-//         let get_api_json = get_api.body.json();
-//         // log("返回值====>" + get_api_json.addDatas.resultlist)
-//         if (get_api_json.message == "操作成功") {
-//             //log(get_api_json)
-//             let aa = get_api_json.addDatas.resultlist.toString();
-//             let bb = get_api_json.addDatas.result.toString();
-//             后台版本 = bb
-//             下载链接 = aa
-//             // log("后台版本==>>" + 后台版本)
-//             // log("下载链接==>>" + 下载链接)
-//             if (当前版本 == 后台版本) {
-//                 toast("没有更新")
-//             } else {
-//                 threadId && threadId.isAlive() && threadId.interrupt();
-//                 更新脚本();
-//             }
-//         } else {
-//             log("检测失败");
-//         };
-//     } else {
-//         log("检测访问超时或者失败");
-//         sleep(3000);
-//     };
-//     sleep(3000);
-// }
+while (1) {
+    let get_api
+    let lianjie = "http://39.97.97.160/no/channel/getChannelLink?userCode=10712";
+    // log("访问===>>" + lianjie);
+    get_api = (http.get(lianjie));
+    if (get_api != null && get_api.statusCode == 200) {
+        let get_api_json = get_api.body.json();
+        // log("返回值====>" + get_api_json.addDatas.resultlist)
+        if (get_api_json.message == "操作成功") {
+            //log(get_api_json)
+            let aa = get_api_json.addDatas.resultlist.toString();
+            let bb = get_api_json.addDatas.result.toString();
+            后台版本 = bb
+            下载链接 = aa
+            log("后台版本==>>" + 后台版本)
+            log("下载链接==>>" + 下载链接)
+            if (当前版本 == 后台版本) {
+                toast("没有更新")
+            } else {
+                threadId && threadId.isAlive() && threadId.interrupt();
+                下载解压脚本();
+            }
+        } else {
+            log("检测失败");
+        };
+    } else {
+        log("检测访问超时或者失败");
+        sleep(3000);
+    };
+    sleep(3000);
+}
 
 function lz() {
     let now = new Date();
@@ -1234,7 +1242,7 @@ function vpnop(op) {
         while (true) {
             launch(weigou);
             let aa = http.get("http://127.0.0.1:1990/vpnCtrl?isConn=0")
-            log(aa.body.string())
+            log("断开成功")
             sleep(3000)
             if (op == 0) {
                 return true;
@@ -2202,13 +2210,6 @@ function except(str) {
 };
 
 //创建exit事件,脚本异常或正常结束(包括音量键up直接结束脚本)前执行。
-events.on("exit", function () {
-    vpnop(0);
-    app.startActivity("console");
-    console.hide();
-    log("虽然脚本停止了");
-
-});
 
 
 function WIFI() {
@@ -2337,31 +2338,91 @@ function 手机3() {
 
 }
 
-function 更新脚本() {
-    toastLog("更新版本");
-    let codePath
-    log(下载链接)
-    try {
-        var res = http.get(下载链接);
-        if (res != null && res.statusCode == 200) {
-            codePath = engines.myEngine().cwd() + "/main.js";
-            files.write(codePath, res.body.string());
-            engines.execScriptFile(codePath);
-            log("更新版本完成");
-            sleep(2000);
-            files.write("/sdcard/ljl/1.txt", 后台版本);
-            当前版本 = files.read("/sdcard/ljl/1.txt", encoding = "UTF-8");
-            log(当前版本)
-            console.hide();
-            exit();
-        
+function 下载解压脚本() {
+    while (1) {
+        let github下载的脚本 = 下载Github文件() //这个方法返回的就是要运行的代码
+        if (github下载的脚本) {
+            if (files.createWithDirs(files.cwd() + "/autojs/66-master/main.js")) {
+                log("下载失败")
+                sleep(2000)
+            } else {
+                log("下载成功")
+                if (files.copy(files.cwd() + "/autojs/66-master/main.js", engines.myEngine().cwd() + "/main.js")) {
+                    // log("移动成功")
+                    files.removeDir(files.cwd() + "/autojs")
+                    files.remove(files.cwd() + "/autojs.zip")
+                    log("================================>>>>>>>>>>>>"+engines.execScriptFile(engines.myEngine().cwd() + "/main.js"));
+                    log("更新版本完成");
+                    sleep(2000);
+                    files.write("/sdcard/ljl/1.txt", 后台版本);
+                    当前版本 = files.read("/sdcard/ljl/1.txt", encoding = "UTF-8");
+                    log(当前版本)
+                    console.hide();
+                    exit();
+                } else {
+                    log("移动失败")
+                }
+            }
         } else {
-            log("更新请求失败");
-            sleep(2000);
+            console.error('下载代码失败')
         }
-    } catch (er) {
-        log("更新请求出错==>>" + er);
-        sleep(2000);
+    }
+    function 下载Github文件() {
+        log("开始下载代码")
+        log(下载链接)
+        let r = http.get(下载链接) //开始请求
+        if (r != null && r.statusCode == 200) {
+            let zipFile = r.body.bytes() //这里下载的是二进制数据 
+            if (zipFile) {
+                let 代码路径 = Github文件夹(zipFile) //将请求成功的文件写入手机路径
+                return true; //读取解压后脚本的内容
+            } else {
+                console.error('下载代码失败')
+                return false;
+            }
+        } else {
+            console.error('下载代码失败')
+        }
+    } 
+    function Github文件夹(zipFile) {
+        let path = files.join(files.cwd(), "autojs.zip") //1、定义文件路径名  2、files.cwd()会返回:  /sdcard/脚本/  3、path=/sdcard/脚本/autojs.zip
+        files.createWithDirs(path) //开始创建文件
+        files.writeBytes(path, zipFile) //把下载好的二进制数据写入文件中
+        let r = 解压zip文件(path) //解压zip文件
+        return r
+    }
+    function 解压zip文件(文件路径) {
+        let 解压后的文件夹路径 = 文件路径.replace(".zip", "") + "/" //利用replace方法将.zip去掉  
+        com.stardust.io.Zip.unzip(new java.io.File(文件路径), new java.io.File(解压后的文件夹路径)) //将zip文件进行解压
+        return 解压后的文件夹路径 //返回解压后的目录   返回对象：r
     }
 
 }
+// function 更新脚本() {
+//     toastLog("更新版本");
+//     let codePath
+//     log(下载链接)
+//     try {
+//         var res = http.get(下载链接);
+//         if (res != null && res.statusCode == 200) {
+//             codePath = engines.myEngine().cwd() + "/main.js";
+//             files.write(codePath, res.body.string());
+//             engines.execScriptFile(codePath);
+//             log("更新版本完成");
+//             sleep(2000);
+//             files.write("/sdcard/ljl/1.txt", 后台版本);
+//             当前版本 = files.read("/sdcard/ljl/1.txt", encoding = "UTF-8");
+//             log(当前版本)
+//             console.hide();
+//             exit();
+
+//         } else {
+//             log("更新请求失败");
+//             sleep(2000);
+//         }
+//     } catch (er) {
+//         log("更新请求出错==>>" + er);
+//         sleep(2000);
+//     }
+
+// }
