@@ -24,10 +24,8 @@ events.on("exit", function () {
     vpnop(0);
     app.startActivity("console");
     console.hide();
-    log("虽然脚本停止了");
-
+    log("脚本停止了");
 });
-
 
 //**************************************************************************************** 
 //var weigou = "com.kexunjie.gj.forsystem"
@@ -2109,9 +2107,7 @@ function 截图权限() {
             }
             sleep(1000);
         }
-
     });
-
     if (!requestScreenCapture()) {
         toastLog("请求截图失败,程序即将退出");
         RNAutojsModule.setScriptStat("执行失败，已退出");
