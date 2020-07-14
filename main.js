@@ -2,7 +2,7 @@ setroot("com.cc.cc"); //设置root
 auto();
 var 下载链接
 var 后台版本
-var 当前版本 = "2"
+var 当前版本 = "5"
 if (files.createWithDirs("/sdcard/ljl/1.txt")) {
     log("版本信息创建成功")
 } else {
@@ -21,7 +21,7 @@ log("7777777777777777777777777777")
 var 控制 = 0;
 var 获取
 var 库号
-var vpn选择
+var vpn选择="0"
 
 //var weigou = "com.kexunjie.gj.forsystem"
 var weigou = "com.wjmt.app"
