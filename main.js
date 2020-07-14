@@ -1,11 +1,8 @@
 setroot("com.cc.cc"); //设置root
-
-if ((android.preference.PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean("key_enable_accessibility_service_by_root", true).commit())) {} else {
-    auto();
-};
-console.show();
+auto();
+//console.show();
 var 控制 = 0;
-let now = new Date();
+
 (function () {
     let request = http.request;
     // 覆盖http关键函数request，其他http返回最终会调用这个函数
@@ -20,13 +17,14 @@ let now = new Date();
         }
     }
 })();
+
+
 events.on("exit", function () {
     vpnop(0);
     app.startActivity("console");
     console.hide();
     log("脚本停止了");
 });
-
 //**************************************************************************************** 
 //var weigou = "com.kexunjie.gj.forsystem"
 var weigou = "com.wjmt.app"
@@ -34,22 +32,23 @@ var 渠道号 = "999060602"
 var 改机包名 = "com.ss.android.ugc.aweme"
 var aid, wid
 //**************************************************************************************** 
+
+
 截图权限();
 //设置应用权限("com.cc.cc"); //设置应用权限
-vpnop(0); //断开vpn
+
 WIFI() //链接WiFi
 xz(); //下载应用
 setvpn(); //设置vpn
-隐藏应用("改机包名"); //隐藏应用
-setsdk("2", "2") //参数1是是sdk,参数2是分辨率,1为开启,2为关
+vpnop(0); //断开vpn
+
 //**************************************************************************************** 
 
-var 手机号, 验证码, token;
-var 项目id;
-var 昵称 = null
-var 库号 = "66666"
-
-var 接码选择 = "2"
+var 获取 = 获取库号()
+var 库号 = 获取[0]
+var vpn选择 = 获取[1]
+var 接码选择 = 获取[2]
+log("库号==>" + 库号 + "vpn==>" + vpn选择 + "接码选择" + 接码选择)
 if (接码选择 == "1") {
     //飞猪
     账号 = "kexunjie"
@@ -63,56 +62,83 @@ if (接码选择 == "1") {
 }
 //**************************************************************************************** 
 
-if (files.createWithDirs("/sdcard/ljl/1.txt")) {
-    log("版本信息创建成功")
-} else {
-    log("版本信息已存在")
 
-}
-var 当前版本 = files.read("/sdcard/ljl/1.txt", encoding = "UTF-8");
-setbmd("/storage/emulated/0/sdcard/ljl/")
+隐藏应用(改机包名); //隐藏应用
+setsdk("2", "1") //参数1是是sdk,参数2是分辨率,1为开启,2为关
+//**************************************************************************************** 
 
-var threadId = threads.start(function () {
-    循环();
-})
+var 手机号, 验证码, token;
+var 项目id;
+var 昵称 = null
 
-function 循环() {
-    while (1) {
+
+//**************************************************************************************** 
+
+// if (files.createWithDirs("/sdcard/ljl/1.txt")) {
+//     log("版本信息创建成功")
+// } else {
+//     log("版本信息已存在")
+
+// }
+// var 当前版本 = files.read("/sdcard/ljl/1.txt", encoding = "UTF-8");
+// setbmd("/storage/emulated/0/sdcard/ljl/")
+// var threadId = threads.start(function () {
+//     循环();
+// })
+
+
+while (1) {
+
+    try {
         新过程();
+    } catch (e) {
+        // 出现异常返回null
+        console.error(e);
+
     }
 }
 
-while (1) {
-    let get_api
-    let lianjie = "http://39.97.97.160/no/channel/getChannelLink?userCode=10712";
-    // log("访问===>>" + lianjie);
-    get_api = (http.get(lianjie));
-    if (get_api != null && get_api.statusCode == 200) {
-        let get_api_json = get_api.body.json();
-        // log("返回值====>" + get_api_json.addDatas.resultlist)
-        if (get_api_json.message == "操作成功") {
-            //log(get_api_json)
-            let aa = get_api_json.addDatas.resultlist.toString();
-            let bb = get_api_json.addDatas.result.toString();
-            后台版本 = bb
-            下载链接 = aa
-            log("后台版本==>>" + 后台版本)
-            log("下载链接==>>" + 下载链接)
-            if (当前版本 == 后台版本) {
-                toast("没有更新")
-            } else {
-                threadId && threadId.isAlive() && threadId.interrupt();
-                下载解压脚本();
-            }
-        } else {
-            log("检测失败");
-        };
-    } else {
-        log("检测访问超时或者失败");
-        sleep(3000);
-    };
-    sleep(3000);
-}
+
+// while (1) {
+//     let get_api
+//     let lianjie = "http://39.97.97.160/no/channel/getChannelLink?userCode=10712";
+//     // log("访问===>>" + lianjie);
+//     get_api = (http.get(lianjie));
+//     if (get_api != null && get_api.statusCode == 200) {
+//         let get_api_json = get_api.body.json();
+//         // log("返回值====>" + get_api_json.addDatas.resultlist)
+//         if (get_api_json.message == "操作成功
+//             //log(get_api_json)
+//             let aa = get_api_json.addDatas.resultlist.toString();
+//             let bb = get_api_json.addDatas.result.toString();
+//             后台版本 = bb
+//             下载链接 = aa
+//             log("后台版本==>>" + 后台版本)
+//             log("下载链接==>>" + 下载链接)
+//             if (当前版本 == 后台版本) {
+//                 toast("没有更新")
+//             } else {
+//                 threadId && threadId.isAlive() && threadId.interrupt();
+//                 vpnop(0); //断开vpn
+//                 WIFI() //链接WiFi
+//                 // if(下载解压脚本()){
+//                 //     exit();
+//                 // }
+
+//                 下载更新()
+
+//             }
+//         } else {
+//             log("检测失败");
+//         };
+//     } else {
+//         log("检测访问超时或者失败");
+//         sleep(3000);
+//     };
+//     sleep(3000);
+// }
+
+
 
 function lz() {
     let now = new Date();
@@ -175,7 +201,27 @@ function lz() {
 };
 
 function 新过程() {
+   
+    关闭应用(改机包名)
+    
     昵称 = null
+    获取 = 获取库号()
+    库号 = 获取[0]
+    vpn选择 = 获取[1]
+    接码选择 = 获取[2]
+    log("库号==>" + 库号 + "vpn==>" + vpn选择 + "接码选择" + 接码选择)
+
+    if (接码选择 == "1") {
+        //飞猪
+        账号 = "kexunjie"
+        密码 = "8fc07d31-5999-4fc7-adf8-2ee0495859fa"
+        项目id = "877"
+    } else if (接码选择 == "2") {
+        //蓝狐
+        账号 = "api-gV4wWNTU"
+        密码 = "kexunjie"
+        项目id = "266"
+    }
     log("我是新增过程")
     //************************************************* 
     let 修改设备信息 = 改机(改机包名, 渠道号, "false")
@@ -191,15 +237,15 @@ function 新过程() {
         return;
     }
     //************************************************* 
-    // vpnop(1); //第一参数0是断开,1是链接.
+    vpnop(1); //第一参数0是断开,1是链接.
 
     while (1) {
         let dw = 定位("", "com.ss.android.ugc.aweme");
 
         if (dw == false) {
             log("多次定位失败");
-            //  setvpn();
-            //vpnop(1);
+            setvpn();
+            vpnop(1);
         } else {
             log("定位成功");
             break;
@@ -224,6 +270,7 @@ function 新过程() {
     let 号码判断 = false
     let 验证码加载次数 = 0
     let 更换号码次数 = 0
+    let 打码失败次数 = 0
     let qq = 0
     while (1) {
 
@@ -251,92 +298,122 @@ function 新过程() {
                     加黑(1);
                     return false;
                 }
-
                 if (packageName("com.ss.android.ugc.aweme").text("获取短信验证码").exists()) {
                     log("点击获取短信验证码")
-                    click(text("获取短信验证码").findOne(1).bounds().centerX(), text("获取短信验证码").findOne(1).bounds().centerY());
+                    click(text("获取短信验证码").findOne().bounds().centerX(), text("获取短信验证码").findOne().bounds().centerY());
                     sleep(1000)
                 }
                 let laid
-                if (textContains("拖动").findOne(1) || textContains("点击").findOne(1)) {
-                    if (textContains("拖动").findOne(1)) {
-                        log("滑动")
-                        类型 = 1
-                        laid = 1310
+                if (text("captcha verify").exists()) {
+                    log("图形验证码剩余打码次数" + (10 - 打码失败次数))
+                    打码失败次数++;
+                    if (打码失败次数 > 10) {
+                        log("打码失败")
+                        加黑(1);
+                        return false;
                     }
-                    if (textContains("点击").findOne(1)) {
-                        log("点击")
-                        类型 = 2
-                        laid = 1303
-                    }
-                    if (验证码加载()) {
-                        log("验证码加载完成")
-                        取图()
-                        let username = "liu296793079"
-                        let password = "Kexunjie123@"
-                        let img = images.read("/sdcard/验证码.png")
-                        let lz结果 = (getCode(username, password, img, laid))
-                        if (lz结果.code == 0) {
-                            log(lz结果.data.res)
-                            let aa = lz结果.data.res.split("|")
-                            if (类型 == 2) {
-                                let 左上
-                                w = text("captcha verify").findOne()
-                                if (w != null) {
-                                    左上 = w.child(0).child(1).child(0).bounds().toString()
-                                }
-                                let 左上角坐标 = 左上.split("(")[1].split(")")[0].split("-")[0].split(",")
-                                let 右下角坐标 = 左上.split("(")[1].split(")")[0].split("-")[1].split(",")
-                                let 左上x = 左上角坐标[0].replace(/^\s+|\s+$/g, "")
-                                let 左上y = 左上角坐标[1].replace(/^\s+|\s+$/g, "")
-                                log(左上x + "======" + 左上y)
-                                for (let i = 0; i < aa.length; i++) {
-                                    let bb = aa[i].split(",")
-                                    click(Number(bb[0]) + Number(左上x), Number(bb[1]) + Number(左上y))
-                                }
-                                sleep(2000)
-                                if (text("确认").exists()) {
-                                    text("确认").click()
-                                    sleep(2000)
-                                }
-                            } else if (类型 == 1) {
-                                let 滑块x
-                                w = text("captcha verify").findOne()
-                                if (w != null) {
-                                    滑块x = w.child(0).child(1).child(1).bounds()
-                                    log("滑块位置===>>>" + 滑块x)
-                                }
-                                let ZB = []
-                                for (let i = 0; i < aa.length; i++) {
-                                    let bb = aa[i].split(",")
-                                    for (let m = 0; m < bb.length; m++) {
-                                        ZB.push(bb[m]);
-                                    }
-                                }
-                                if (ZB.length == 2) {
+                    let 图形验证 = 验证码加载()
+                    if (图形验证 != false) {
 
-                                    let 开始x = 滑块x.centerX()
-                                    let 开始y = 滑块x.centerY()
-                                    let x1 = Number(ZB[0])
-                                    let 距离 = math.abs(开始x - x1);
-                                    log("距离==>" + 距离)
-                                    仿真随机带曲线(开始x, 开始y, 开始x + 距离, 开始y, 随机数(2000, 5000))
-                                } else if (ZB.length == 4) {
-                                    let x1 = Number(ZB[0])
-                                    let x2 = Number(ZB[2])
-                                    let 距离 = x2 - x1
-                                    log("距离==>" + 距离)
-                                    let 开始x = 滑块x.centerX()
-                                    let 开始y = 滑块x.centerY()
-                                    仿真随机带曲线(开始x, 开始y, 开始x + 距离, 开始y, 随机数(2000, 5000))
+                        log("验证码加载完成")
+                        if (取图() == true) {
+                            let username = "liu296793079"
+                            let password = "Kexunjie123@"
+                            let img = images.read("/sdcard/验证码.png")
+                            try {
+                                let kk = getCode(username, password, img, 图形验证[1])
+                                log(kk)
+                                if (kk != false) {
+
+                                    var lz结果 = kk.data.res
+                                } else {
+
+                                    log("打码报错")
                                 }
+
+                                log("打码结果==>>" + lz结果)
+                                if (lz结果 != undefined) {
+
+
+                                    let aa = lz结果.split("|")
+                                    if (图形验证[0] == 2) {
+                                        let 左上
+                                        w = text("captcha verify").findOne()
+                                        if (w != null) {
+                                            左上 = w.child(0).child(1).child(0).bounds().toString()
+                                        }
+                                        let 左上角坐标 = 左上.split("(")[1].split(")")[0].split("-")[0].split(",")
+                                        let 右下角坐标 = 左上.split("(")[1].split(")")[0].split("-")[1].split(",")
+                                        let 左上x = 左上角坐标[0].replace(/^\s+|\s+$/g, "")
+                                        let 左上y = 左上角坐标[1].replace(/^\s+|\s+$/g, "")
+                                        log(左上x + "======" + 左上y)
+                                        for (let i = 0; i < aa.length; i++) {
+                                            let bb = aa[i].split(",")
+                                            click(Number(bb[0]) + Number(左上x), Number(bb[1]) + Number(左上y))
+                                            sleep(随机数(500, 1000))
+                                        }
+                                        sleep(2000)
+                                        if (text("确认").exists()) {
+                                            text("确认").click()
+                                            sleep(2000)
+                                        }
+                                    } else if (图形验证[0] == 1) {
+                                        let 滑块x
+                                        //判断滑块位置
+                                        w = text("captcha verify").findOne()
+                                        if (w != null) {
+                                            滑块x = w.child(0).child(1).child(1).bounds()
+                                            log("滑块位置===>>>" + 滑块x)
+                                        }
+                                        let ZB = []
+                                        for (let i = 0; i < aa.length; i++) {
+                                            let bb = aa[i].split(",")
+                                            for (let m = 0; m < bb.length; m++) {
+                                                ZB.push(bb[m]);
+                                            }
+                                        }
+                                        //根据返回值坐标数滑动
+                                        if (ZB.length == 2) {
+                                            let 开始x = 滑块x.centerX()
+                                            let 开始y = 滑块x.centerY()
+                                            let x1 = Number(ZB[0])
+                                            let 距离 = Math.abs(开始x - x1);
+                                            log("距离==>" + 距离)
+                                            仿真随机带曲线(开始x, 开始y, 开始x + 距离, 开始y, 随机数(500, 1000))
+                                        } else if (ZB.length == 4) {
+                                            let x1 = Number(ZB[0])
+                                            let x2 = Number(ZB[2])
+
+                                            log(x1, x2)
+                                            let 距离 = Math.abs(x2 - x1)
+                                            log("距离==>" + 距离)
+                                            let 开始x = 滑块x.centerX()
+                                            let 开始y = 滑块x.centerY()
+                                            仿真随机带曲线(开始x, 开始y, 开始x + 距离, 开始y, 随机数(500, 1000))
+                                        } else {
+                                            log("返回答案有误" + lz结果)
+                                        }
+
+
+
+                                    }
+
+
+                                } else {
+
+                                    log("打码失败" + lz结果)
+                                }
+                                sleep(3000)
+
+                            } catch (e) {
+                                log("打码行为错误=======>>>" + e);
 
                             }
 
                         } else {
-                            log("打码失败")
+                            log("取图失败")
                         }
-                        sleep(3000)
+
 
                     } else {
                         验证码加载次数++;
@@ -387,7 +464,7 @@ function 新过程() {
 
                 加黑(1);
                 更换号码次数++;
-                if (更换号码次数 >= 8) {
+                if (更换号码次数 >= 5) {
                     return false;
 
                 }
@@ -446,7 +523,13 @@ function 新过程() {
         }
         if (权限 && packageName("com.ss.android.ugc.aweme").text("登录").exists()) {
             log("点击登录")
-            click(text("登录").findOne(1).bounds().centerX(), text("登录").findOne(1).bounds().centerY());
+            click(text("登录").findOne().bounds().centerX(), text("登录").findOne().bounds().centerY());
+            sleep(1000)
+        }
+
+        if (text("允许").exists()) {
+            log("点击登录")
+            click(text("允许").findOne().bounds().centerX(), text("允许").findOne().bounds().centerY());
             sleep(1000)
         }
         if (text("跳过").exists()) {
@@ -462,6 +545,13 @@ function 新过程() {
             text("我知道了").click()
             sleep(1000)
         }
+
+        if (packageName("com.ss.android.ugc.aweme").text("取消").exists()) {
+            log("取消")
+            packageName("com.ss.android.ugc.aweme").text("取消").click()
+            sleep(1000)
+        }
+
         let w = packageName("com.ss.android.ugc.aweme").text("同城").findOne(1)
         let nz = false
         if (w != null) {
@@ -496,6 +586,11 @@ function 新过程() {
                     packageName("com.ss.android.ugc.aweme").textContains("下次").click()
                     sleep(1000)
                 }
+                if (packageName("com.ss.android.ugc.aweme").text("取消").exists()) {
+                    log("取消")
+                    packageName("com.ss.android.ugc.aweme").text("取消").click()
+                    sleep(1000)
+                }
                 if (packageName("com.ss.android.ugc.aweme").textContains("以后").exists()) {
                     log("以后")
                     packageName("com.ss.android.ugc.aweme").textContains("以后").click()
@@ -519,24 +614,50 @@ function 新过程() {
         }
         sleep(1000);
     }
+    关闭应用(改机包名)
     备份("com.ss.android.ugc.aweme")
     上传到库()
     //上传(手机号)
 
     function 验证码加载() {
+
+        let 类型, laid
         for (let i = 10 - 1; i >= 0; i--) {
-            let w = text("captcha verify").findOne(100)
+            let w = text("captcha verify").findOne(1)
+            let w1
+            // log(w)
+
+            if (textContains("拖动").findOne(1)) {
+                log("滑动验证")
+                类型 = 1
+                laid = 1310
+            } else if (textContains("点击").findOne(1)) {
+                log("点击验证")
+                类型 = 2
+                laid = 1303
+            }
+
             if (w != null) {
                 //log(w)
                 try {
-                    let w1 = w.child(0).child(1)
+                    w1 = w.child(0).child(1)
                     if (类型 == 1 && w1.childCount() == 3) {
-                        return true;
+                        if (textContains("拖动").findOne(1)) {
+                            //  log("滑动验证")
+                            类型 = 1
+                            laid = 1310
+                        } else if (textContains("点击").findOne(1)) {
+                            //  log("点击验证")
+                            类型 = 2
+                            laid = 1303
+                        }
+
+                        return [类型, laid];
                     } else if (类型 == 2 && w1.childCount() == 2) {
-                        return true;
+                        return [类型, laid];
                     }
                 } catch (e) {
-                    log("等待验证加载完成")
+                    log("出错了,等待验证加载完成")
                 }
                 sleep(1000)
             }
@@ -553,6 +674,7 @@ function 新过程() {
         } catch (e) {
             return false;
         }
+
         return false;
     }
 
@@ -560,31 +682,35 @@ function 新过程() {
 
 function 上传(信息) {
     vpnop(0)
-
-    while (true) {
-        launch(weigou);
-        let lianjie = "http://127.0.0.1:1990/uploadAddInfo?deviceInfoId=" + wid + "&androidId=" + aid + "&account_password=" + 信息
-        log("访问===>>" + lianjie);
-        let get_api = (http.get(lianjie));
-        if (get_api == null) {
-            log("操作失败");
-        } else if (get_api.statusCode == 200) {
-            let get_api_json = get_api.body.json();
-            if (get_api_json.message == "上传附加信息成功") {
-                log("上传  message===>" + get_api_json.message);
-                home();
-                return true;
+    try {
+        while (true) {
+            launch(weigou);
+            let lianjie = "http://127.0.0.1:1990/uploadAddInfo?deviceInfoId=" + wid + "&androidId=" + aid + "&account_password=" + 信息
+            log("访问===>>" + lianjie);
+            let get_api = (http.get(lianjie));
+            if (get_api == null) {
+                log("操作失败");
+            } else if (get_api.statusCode == 200) {
+                let get_api_json = get_api.body.json();
+                if (get_api_json.message == "上传附加信息成功") {
+                    log("上传  message===>" + get_api_json.message);
+                    home();
+                    return true;
+                } else {
+                    log("上传失败  message===>" + get_api_json.message);
+                };
             } else {
-                log("上传失败  message===>" + get_api_json.message);
+                log("上传 失败未知错误");
             };
-        } else {
-            log("上传 失败未知错误");
-        };
-        sleep(3000);
+            sleep(3000);
+        }
+
+    } catch (e) {
+        log("上传方法错误=======>>>" + e);
+        return false;
     }
 
 }
-
 
 function 备份(包名) {
     vpnop(0);
@@ -592,10 +718,11 @@ function 备份(包名) {
         launch(weigou);
         let lianjie = "http://127.0.0.1:1990/uploadBackup?id=" + wid + "&androidId=" + aid + "&packageName=" + 包名
         log("访问===>>" + lianjie);
-        http.__okhttp__.setTimeout(60000)
+        http.__okhttp__.setTimeout(300000);
         let get_api = (http.get(lianjie));
         if (get_api == null) {
             log("操作失败");
+            vpnop(0)
         } else if (get_api.statusCode == 200) {
             let get_api_json = get_api.body.json();
             if (get_api_json.message == "上传备份信息成功") {
@@ -624,9 +751,11 @@ function 打开抖音到注册页面() {
         }
         if (packageName("com.ss.android.ugc.aweme").textContains("上滑").exists()) {
             log("上滑")
-            gestures([0, 1000, [490, 1703],
-                [506, 229]
-            ]);
+            let gun = scrollable(true).desc("视频").findOne();
+            if (gun != null) {
+                gun.scrollForward()
+
+            }
             sleep(1000)
         }
         if (packageName("com.ss.android.ugc.aweme").textContains("以后").exists()) {
@@ -650,7 +779,7 @@ function 打开抖音到注册页面() {
         mm++;
         toast("等待注册页面");
         if (mm >= 15) {
-            log("注册页面打开失败" + (15 - i))
+            log("注册页面打开失败" + (15 - mm))
             return false;
         }
 
@@ -829,11 +958,11 @@ function setroot(bm) {
         } else if (get_api.statusCode == 200) {
             let get_api_json = get_api.body.json();
             if (get_api_json.message == "设置成功") {
-                log("设置root权限message===>" + get_api_json.message);
+                log("root权限message=>" + get_api_json.message);
                 home();
                 return true;
             } else {
-                log("设置root权限message===>" + get_api_json.message);
+                log("设置root权限message=>" + get_api_json.message);
             };
         } else {
             log("设置root权限未知错误");
@@ -905,14 +1034,14 @@ function setvpn() {
 function 改机(包名, channel, survival) {
     let gj, tgj
     let 系统版本 = random(22, 25);
-    log(survival + "获取设备信息==>" + channel + ",系统==>" + 系统版本);
+    //log(survival + "获取设备信息==>" + channel + ",系统==>" + 系统版本);
+    log("获取设备信息")
     while (true) {
         launch(weigou)
         sleep(2000);
         // let lianjie = "http://127.0.0.1:1990/getDeviceInfoFromServer?destPackageInfos=" + 包名 + "&packageName=1&chanel=" + channel + "&survival=" + survival + "&sdk=" + 系统版本
-
-        let lianjie = "http://127.0.0.1:1990/wx?destPackageInfos=com.ss.android.ugc.aweme&survival=false&phoneNumber=CN" + 手机3() + getRanType(1, 8)
-        log("访问===>>" + lianjie);
+        let lianjie = "http://127.0.0.1:1990/wx?destPackageInfos=" + 改机包名 + "&survival=false&phoneNumber=CN" + 手机3() + getRanType(1, 8)
+        // log("访问===>>" + lianjie);
         http.__okhttp__.setTimeout(60000)
         gj = http.get(lianjie);
         if (gj != null) {
@@ -1044,18 +1173,11 @@ function wgvpn() {
 
 }
 
-
-
-
-
-
-
-
-
-
 //链接vpn,op=0是断开
 function vpnop(op) {
-    let xz = 0
+
+    // log("vpn方法")
+    let xz = vpn选择
     if (xz == 0) {
         if (wgvpn() == true) {
             return true;
@@ -1195,16 +1317,16 @@ function vpnop(op) {
     }
 
     function 检查是否链接成功() {
-        for (let i = 20 - 1; i >= 0; i--) {
+        for (let i = 6 - 1; i >= 0; i--) {
             if (text("(已连接)").exists()) {
                 return true;
                 break;
             } else {
-                log("等待vpn链接成功" + i)
+                toast("等待vpn链接成功" + i)
             }
             if (text("确定").exists()) {
                 text("确定").click()
-                sleep(2000);
+                sleep(3000);
             }
             sleep(1000);
         }
@@ -1232,38 +1354,42 @@ function vpnop(op) {
 
 
     function wgvpn() {
-
-        //let fuq = ["hb01.000.link", "hb02.000.link", "hb03.000.link", "hb04.000.link", "hb05.000.link", "hb06.000.link", "hb07.000.link", "hb08.000.link", "hb09.000.link", "hb10.000.link", "hb11.000.link", "hb12.000.link", "hb13.000.link", "hb14.000.link", "hb14.000.link"];
-        let fuq = ["yhtip.com"]
-        let vpn账号 = "wsw1";
-        let vpn密码 = "1";
-        while (true) {
-            launch(weigou);
-            let aa = http.get("http://127.0.0.1:1990/vpnCtrl?isConn=0")
-            log("断开成功")
-            sleep(3000)
-            if (op == 0) {
-                return true;
-            }
-            http.__okhttp__.setTimeout(20000)
-            let lianjie = "http://127.0.0.1:1990/vpnCtrl?isConn=1&ip=" + fuq[随机数(0, (fuq.length - 1))] + "&name=" + vpn账号 + "&password=" + vpn密码;
-            log("访问===>>" + lianjie);
-            let get_api = (http.get(lianjie));
-            if (get_api == null) {
-                log("操作失败");
-            } else if (get_api.statusCode == 200) {
-                let get_api_json = get_api.body.json();
-                if (get_api_json.message == "连接vpn成功") {
-                    log("链接vpn  message===>" + get_api_json.message);
-                    home();
+        try {
+            //let fuq = ["hb01.000.link", "hb02.000.link", "hb03.000.link", "hb04.000.link", "hb05.000.link", "hb06.000.link", "hb07.000.link", "hb08.000.link", "hb09.000.link", "hb10.000.link", "hb11.000.link", "hb12.000.link", "hb13.000.link", "hb14.000.link", "hb14.000.link"];
+            let fuq = ["yhtip.com"]
+            let vpn账号 = "wsw1";
+            let vpn密码 = "1";
+            while (true) {
+                launch(weigou);
+                let aa = http.get("http://127.0.0.1:1990/vpnCtrl?isConn=0")
+                log("断开成功")
+                sleep(3000)
+                if (op == 0) {
                     return true;
+                }
+                http.__okhttp__.setTimeout(20000)
+                let lianjie = "http://127.0.0.1:1990/vpnCtrl?isConn=1&ip=" + fuq[随机数(0, (fuq.length - 1))] + "&name=" + vpn账号 + "&password=" + vpn密码;
+                log("访问===>>" + lianjie);
+                let get_api = (http.get(lianjie));
+                if (get_api == null) {
+                    log("操作失败");
+                } else if (get_api.statusCode == 200) {
+                    let get_api_json = get_api.body.json();
+                    if (get_api_json.message == "连接vpn成功") {
+                        log("链接vpn  message===>" + get_api_json.message);
+                        home();
+                        return true;
+                    } else {
+                        log("链接vpn  message===>" + get_api_json.message);
+                    };
                 } else {
-                    log("链接vpn  message===>" + get_api_json.message);
+                    log("链接vpn未知错误");
                 };
-            } else {
-                log("链接vpn未知错误");
-            };
-            sleep(3000);
+                sleep(3000);
+            }
+        } catch (e) {
+            log("wgvpn方法错误=======>>>" + e);
+            return false;
         }
 
     }
@@ -1280,15 +1406,19 @@ function vpnop(op) {
 }
 //执行shell命令
 function shell(shell命令, 是否root) {
-    var result = shell(shell命令, 是否root);
-    if (result.code == 0) {
-        log("shell命令执行成功" + result.code);
-        return true;
-    } else {
-        log("执行失败！请到控制台查看错误信息" + result);
+    try {
+        var result = shell(shell命令, 是否root);
+        if (result.code == 0) {
+            log("shell命令执行成功" + result.code);
+            return true;
+        } else {
+            log("执行失败！请到控制台查看错误信息" + result);
+            return false;
+        }
+    } catch (e) {
+        log("shell方法错误=======>>>" + e);
         return false;
     }
-    sleep(1000);
 }
 //通过链接下载文件
 
@@ -1437,45 +1567,52 @@ function 安装(path) {
 }
 
 function download(url, filePath) {
-    importClass('java.io.FileOutputStream');
-    importClass('java.io.IOException');
-    importClass('java.io.InputStream');
-    importClass('java.net.MalformedURLException');
-    importClass('java.net.URL');
-    importClass('java.net.URLConnection');
-    importClass('java.util.ArrayList');
-    var url = new URL(url);
-    var conn = url.openConnection(); //URLConnection
-    var inStream = conn.getInputStream(); //InputStream
-    var fs = new FileOutputStream(filePath); //FileOutputStream
-    var connLength = conn.getContentLength(); //int
-    var buffer = util.java.array('byte', 1024); //byte[]
-    var byteSum = 0; //总共读取的文件大小
-    var byteRead; //每次读取的byte数
-    log('要下载的文件大小=' + connLength);
-    log(connLength);
-    var threadId = threads.start(function () {
-        while (1) {
-            var 当前写入的文件大小 = byteSum;
-            var progress = (当前写入的文件大小 / connLength) * 100;
-            if (progress > 0.1) {
-                var progress = parseInt(progress).toString() + '%';
-                log("下载进度" + progress)
-                if (当前写入的文件大小 >= connLength) {
-                    break;
+
+    try {
+        importClass('java.io.FileOutputStream');
+        importClass('java.io.IOException');
+        importClass('java.io.InputStream');
+        importClass('java.net.MalformedURLException');
+        importClass('java.net.URL');
+        importClass('java.net.URLConnection');
+        importClass('java.util.ArrayList');
+        var url = new URL(url);
+        var conn = url.openConnection(); //URLConnection
+        var inStream = conn.getInputStream(); //InputStream
+        var fs = new FileOutputStream(filePath); //FileOutputStream
+        var connLength = conn.getContentLength(); //int
+        var buffer = util.java.array('byte', 1024); //byte[]
+        var byteSum = 0; //总共读取的文件大小
+        var byteRead; //每次读取的byte数
+        log('要下载的文件大小=' + connLength);
+        log(connLength);
+        var threadId = threads.start(function () {
+            while (1) {
+                var 当前写入的文件大小 = byteSum;
+                var progress = (当前写入的文件大小 / connLength) * 100;
+                if (progress > 0.1) {
+                    var progress = parseInt(progress).toString() + '%';
+                    log("下载进度" + progress)
+                    if (当前写入的文件大小 >= connLength) {
+                        break;
+                    }
                 }
+                sleep(1000);
             }
-            sleep(1000);
+        })
+        while ((byteRead = inStream.read(buffer)) != -1) {
+            byteSum += byteRead;
+            //当前时间
+            currentTime = java.lang.System.currentTimeMillis();
+            fs.write(buffer, 0, byteRead); //读取
         }
-    })
-    while ((byteRead = inStream.read(buffer)) != -1) {
-        byteSum += byteRead;
-        //当前时间
-        currentTime = java.lang.System.currentTimeMillis();
-        fs.write(buffer, 0, byteRead); //读取
+        threadId && threadId.isAlive() && threadId.interrupt();
+        toastLog('下载完成');
+    } catch (e) {
+        log("xz方法错误=======>>>" + e);
+        return false;
     }
-    threadId && threadId.isAlive() && threadId.interrupt();
-    toastLog('下载完成');
+
 }
 
 function getVerName(package_name) {
@@ -1485,55 +1622,71 @@ function getVerName(package_name) {
     }
 }
 
-function xz() {
+function 下载更新() {
     var app下载地址 = {
-        sstp: "https://hw35850454-cn-east-2.obs.cn-east-2.myhuaweicloud.com/installtasks/it.colucciweb.sstpvpnclient_1010008_1715f2e1769eddec8551c057bc68157e.apk",
-        我叫mt: "https://hw35850454-cn-east-2.obs.cn-east-2.myhuaweicloud.com/installtasks/com.wjmt.myapp_1005_a661eec39c43e7570a0eada0676f8fa0.apk",
-        抖音: "https://hw35850454-cn-east-2.obs.cn-east-2.myhuaweicloud.com/installtasks/com.ss.android.ugc.aweme_110001_99fce21878a24c83f8c43f63c43451d1.apk"
+        更新: 下载地址,
     };
-
     var 存放位置 = {
-        sstp: files.join(files.getSdcardPath(), 'sstp.apk'),
-        我叫mt: files.join(files.getSdcardPath(), '我叫mt.apk'),
-        抖音: files.join(files.getSdcardPath(), '抖音.apk'),
+        更新: files.join(files.getSdcardPath(), 'auto.apk'),
     };
-    if ((getVerName("it.colucciweb.sstpvpnclient")) == "1.00.08" && getAppName("it.colucciweb.sstpvpnclient") != null) {
-        log("sstp版本正确")
-    } else {
-        if (getAppName("it.colucciweb.sstpvpnclient") != null) {
-            log("版本不正确,开始卸载,然后安装")
-            uninstall("it.colucciweb.sstpvpnclient")
-            下载安装(app下载地址.sstp, 存放位置.sstp)
-        } else {
-            log("没有安装直接下载")
-            下载安装(app下载地址.sstp, 存放位置.sstp)
-        }
-    }
-
-    if ((getVerName("com.ss.android.ugc.aweme")) == "11.0.0" && getAppName("com.ss.android.ugc.aweme") != null) {
-        log("sstp版本正确")
-    } else {
-        if (getAppName("com.ss.android.ugc.aweme") != null) {
-            log("版本不正确,开始卸载,然后安装")
-            uninstall("com.ss.android.ugc.aweme")
-            下载安装(app下载地址.抖音, 存放位置.抖音)
-        } else {
-            log("没有安装直接下载")
-            下载安装(app下载地址.抖音, 存放位置.抖音)
-        }
-    }
+    下载安装(app下载地址.更新, 存放位置.更新)
 
 
 }
 
 
 
+function xz() {
+
+    try {
+        var app下载地址 = {
+            sstp: "https://hw35850454-cn-east-2.obs.cn-east-2.myhuaweicloud.com/installtasks/it.colucciweb.sstpvpnclient_1010008_1715f2e1769eddec8551c057bc68157e.apk",
+            我叫mt: "https://hw35850454-cn-east-2.obs.cn-east-2.myhuaweicloud.com/installtasks/com.wjmt.myapp_1005_a661eec39c43e7570a0eada0676f8fa0.apk",
+            抖音: "https://hw35850454-cn-east-2.obs.cn-east-2.myhuaweicloud.com/installtasks/com.ss.android.ugc.aweme_110001_99fce21878a24c83f8c43f63c43451d1.apk"
+        };
+
+        var 存放位置 = {
+            sstp: files.join(files.getSdcardPath(), 'sstp.apk'),
+            我叫mt: files.join(files.getSdcardPath(), '我叫mt.apk'),
+            抖音: files.join(files.getSdcardPath(), '抖音.apk'),
+        };
+        if ((getVerName("it.colucciweb.sstpvpnclient")) == "1.00.08" && getAppName("it.colucciweb.sstpvpnclient") != null) {
+            log("sstp版本正确")
+        } else {
+            if (getAppName("it.colucciweb.sstpvpnclient") != null) {
+                log("版本不正确,开始卸载,然后安装")
+                uninstall("it.colucciweb.sstpvpnclient")
+                下载安装(app下载地址.sstp, 存放位置.sstp)
+            } else {
+                log("没有安装直接下载")
+                下载安装(app下载地址.sstp, 存放位置.sstp)
+            }
+        }
+
+        if ((getVerName("com.ss.android.ugc.aweme")) == "11.0.0" && getAppName("com.ss.android.ugc.aweme") != null) {
+            log("sstp版本正确")
+        } else {
+            if (getAppName("com.ss.android.ugc.aweme") != null) {
+                log("版本不正确,开始卸载,然后安装")
+                uninstall("com.ss.android.ugc.aweme")
+                下载安装(app下载地址.抖音, 存放位置.抖音)
+            } else {
+                log("没有安装直接下载")
+                下载安装(app下载地址.抖音, 存放位置.抖音)
+            }
+        }
+    } catch (e) {
+        log("xz方法错误=======>>>" + e);
+        return false;
+    }
+}
+
 
 
 
 function 定位(位置, 应用) {
     if (应用 == "") {
-        log("定位,请传递包名参数");
+        // log("定位,请传递包名参数");
         return false;
     }
     while (true) {
@@ -1686,8 +1839,6 @@ function 设置应用权限(包名) {
     };
 }
 
-
-
 function 关闭应用(packageName) {
     try {
         app.openAppSetting(packageName);
@@ -1713,15 +1864,6 @@ function 关闭应用(packageName) {
 
 }
 
-
-
-
-
-
-
-
-
-
 function 获取手机号() {
     log(接码选择 + "=========>>")
     if (接码选择 == 1) {
@@ -1746,63 +1888,69 @@ function 飞猪() {
     手机号 = null
     let i = 0
     let a
-    let lj = "http://api.tsscode.com/api/yhdl?password=" + 账号 + "&apiAccount=" + 密码
-    while (1) {
-        // log("链接====>>" + lj)
-        a = http.get(lj)
-        if (a != null && a.statusCode == "200") {
-            var b = a.body.string()
-            if (except(b)) {
-                var c = JSON.parse(b)
-                if (c.result == "成功") {
-                    toastLog("飞猪登录成功")
-                    token = c.token
-                    break;
+    try {
+        let lj = "http://api.tsscode.com/api/yhdl?password=" + 账号 + "&apiAccount=" + 密码
+        while (1) {
+            // log("链接====>>" + lj)
+            a = http.get(lj)
+            if (a != null && a.statusCode == "200") {
+                var b = a.body.string()
+                if (except(b)) {
+                    var c = JSON.parse(b)
+                    if (c.result == "成功") {
+                        toastLog("飞猪登录成功")
+                        token = c.token
+                        break;
+                    } else {
+                        toastLog("飞猪登录失败===>" + b)
+                    }
                 } else {
-                    toastLog("飞猪登录失败===>" + b)
+                    log("飞猪返回非json" + b)
                 }
             } else {
-                log("飞猪返回非json" + b)
+                toastLog("飞猪返回服务器出错")
             }
-        } else {
-            toastLog("飞猪返回服务器出错")
+            sleep(3000)
+            i++;
+            if (i >= 10) {
+                return null;
+            }
         }
-        sleep(3000)
-        i++;
-        if (i >= 10) {
-            return null;
-        }
-    }
-    i = 0
-    lj = "http://api.tsscode.com/api/yhqh_s?token=" + token + "&id=" + 项目id + "&pingtaika=1" //pingtaika=是否使用平台卡 0代表不使用平台卡 1代表使用平台卡 (选填: 不填则默认不使用)   
-    while (1) {
-        // log("链接====>>"+lj)
-        a = http.get(lj)
-        if (a != null && a.statusCode == "200") {
-            var b = a.body.string()
-            if (except(b)) {
-                var c = JSON.parse(b)
-                if (c.result == "成功") {
+        i = 0
+        lj = "http://api.tsscode.com/api/yhqh_s?token=" + token + "&id=" + 项目id + "&pingtaika=1" //pingtaika=是否使用平台卡 0代表不使用平台卡 1代表使用平台卡 (选填: 不填则默认不使用)   
+        while (1) {
+            // log("链接====>>"+lj)
+            a = http.get(lj)
+            if (a != null && a.statusCode == "200") {
+                var b = a.body.string()
+                if (except(b)) {
+                    var c = JSON.parse(b)
+                    if (c.result == "成功") {
 
 
-                    手机号 = c.number
-                    log("飞猪号码获取成功====>" + 手机号)
-                    break;
+                        手机号 = c.number
+                        log("飞猪号码获取成功====>" + 手机号)
+                        break;
+                    } else {
+                        toastLog("飞猪获取手机失败===>" + b)
+                        break;
+                    }
                 } else {
-                    toastLog("飞猪获取手机失败===>" + b)
-                    break;
+                    log("飞猪返回非json" + b)
                 }
             } else {
-                log("飞猪返回非json" + b)
+                toastLog("飞猪服务器出错")
             }
-        } else {
-            toastLog("飞猪服务器出错")
+            sleep(3000)
+            i++;
+            if (i >= 10) {
+                return null;
+            }
         }
-        sleep(3000)
-        i++;
-        if (i >= 10) {
-            return null;
-        }
+
+    } catch (e) {
+        log("蓝狐方法错误=======>>>" + e);
+        return false;
     }
 }
 
@@ -1846,159 +1994,192 @@ function 飞猪短信() {
 }
 
 function 加黑(jh) {
+
     let aa
-    if (接码选择 == "1") {
-        if (jh == "1") {
 
-            aa = http.get("http://api.tsscode.com/api/yhsf?token=" + token + "&id=" + 项目id + "&number=" + 手机号);
-            if (aa != null && aa.statusCode == "200") {
-                log("释放===>>" + aa.body.string())
-            }
-            aa = http.get("http://api.tsscode.com/api/yhlh?token=" + token + "&id=" + 项目id + "&number=" + 手机号);
-            if (aa != null && aa.statusCode == "200") {
-                log("加黑===>>" + aa.body.string())
-            }
+    try {
+        if (接码选择 == "1") {
+            if (jh == "1") {
+                http.__okhttp__.setTimeout(10000)
+                aa = http.get("http://api.tsscode.com/api/yhsf?token=" + token + "&id=" + 项目id + "&number=" + 手机号);
+                if (aa != null && aa.statusCode == "200") {
+                    log("释放===>>" + aa.body.string())
+                }
+                http.__okhttp__.setTimeout(10000)
+                aa = http.get("http://api.tsscode.com/api/yhlh?token=" + token + "&id=" + 项目id + "&number=" + 手机号);
+                if (aa != null && aa.statusCode == "200") {
+                    log("加黑===>>" + aa.body.string())
+                }
 
-        } else if (jh == 0) {
-            aa = http.get("http://api.tsscode.com/api/yhsf?token=" + token + "&id=" + 项目id + "&number=" + 手机号);
-            if (aa != null && aa.statusCode == "200") {
-                log("释放===>>" + aa.body.string())
+            } else if (jh == 0) {
+                http.__okhttp__.setTimeout(10000)
+                aa = http.get("http://api.tsscode.com/api/yhsf?token=" + token + "&id=" + 项目id + "&number=" + 手机号);
+                if (aa != null && aa.statusCode == "200") {
+                    log("释放===>>" + aa.body.string())
+                }
+
+            }
+        } else if (接码选择 == "2") {
+            if (jh == 1) {
+                http.__okhttp__.setTimeout(10000)
+                aa = http.get("http://www.huli667.com:81/sms/api/cancelRecv?token=" + token + "&sid=" + 项目id + "&phone=" + 手机号);
+                if (aa != null && aa.statusCode == "200") {
+                    log("加黑===>>" + aa.body.string())
+                }
+                http.__okhttp__.setTimeout(10000)
+                aa = http.get("http://www.huli667.com:81/sms/api/addBlacklist?token=" + token + "&sid=" + 项目id + "&phone=" + 手机号);
+                if (aa != null && aa.statusCode == "200") {
+                    log("释放===>>" + aa.body.string())
+                }
+            } else if (jh == 0) {
+                log("5555555")
+                http.__okhttp__.setTimeout(10000)
+                aa = http.get("http://www.huli667.com:81/sms/api/cancelRecv?token=" + token + "&sid=" + 项目id + "&phone=" + 手机号);
+                if (aa != null && aa.statusCode == "200") {
+                    log("释放===>>" + aa.body.string())
+                }
+
             }
 
         }
-    } else if (接码选择 == "2") {
-        if (jh == 1) {
-            aa = http.get("http://www.huli667.com:81/sms/api/cancelRecv?token=" + token + "&sid=" + 项目id + "&phone=" + 手机号);
-            if (aa != null && aa.statusCode == "200") {
-                log("加黑===>>" + aa.body.string())
-            }
-            aa = http.get("http://www.huli667.com:81/sms/api/addBlacklist?token=" + token + "&sid=" + 项目id + "&phone=" + 手机号);
-            if (aa != null && aa.statusCode == "200") {
-                log("释放===>>" + aa.body.string())
-            }
-        } else if (jh == 0) {
-            log("5555555")
-            aa = http.get("http://www.huli667.com:81/sms/api/cancelRecv?token=" + token + "&sid=" + 项目id + "&phone=" + 手机号);
-            if (aa != null && aa.statusCode == "200") {
-                log("释放===>>" + aa.body.string())
-            }
 
-        }
-
+    } catch (e) {
+        log("加黑方法错误=======>>>" + e);
+        return false;
     }
-
-
-
-
 }
-
-
-
 
 
 function 蓝狐() {
     手机号 = null
-    let i = 0
+    var i = 0
     let a
-
-    let lj = "http://www.huli667.com:81/sms/api/login?username=" + 账号 + "&password=" + 密码
-    log("蓝狐>>>====" + lj);
-    while (1) {
-        // log("链接====>>" + lj)
-        a = http.get(lj)
-        if (a != null && a.statusCode == "200") {
-            var b = a.body.string()
-            if (except(b)) {
-                var c = JSON.parse(b)
-                if (c.msg == "success") {
-                    toastLog("蓝狐登录成功")
-                    token = c.token
-                    break;
-                } else {
-                    toastLog("蓝狐登录失败===>" + b)
-                }
-            } else {
-                log("蓝狐返回非json" + b)
-            }
-        } else {
-            toastLog("蓝狐返回服务器出错")
-        }
-        sleep(3000)
-        i++;
-        if (i >= 10) {
-            return null;
-        }
-    }
-    i = 0
-    lj = "http://www.huli667.com:81/sms/api/getPhone?token=" + token + "&sid=" + 项目id
-    while (1) {
-        // log("链接====>>"+lj)
-        a = http.get(lj)
-        if (a != null && a.statusCode == "200") {
-            var b = a.body.string()
-            if (except(b)) {
-                var c = JSON.parse(b)
-                if (c.msg == "success") {
-                    手机号 = c.phone
-                    log("蓝狐号码获取成功====>" + 手机号)
-                    break;
-                } else if (c.msg == "暂无号码请延迟10秒后再次请求") {
-                    for (let i = 6 - 1; i >= 0; i--) {
-                        toast("延迟" + i + "次后获取号码");
-                        sleep(2000);
+    try {
+        http.__okhttp__.setTimeout(10000)
+        let lj = "http://www.huli667.com:81/sms/api/login?username=" + 账号 + "&password=" + 密码
+        log("蓝狐>>>====" + lj);
+        while (1) {
+            // log("链接====>>" + lj)
+            a = http.get(lj)
+            if (a != null && a.statusCode == "200") {
+                var b = a.body.string()
+                if (except(b)) {
+                    var c = JSON.parse(b)
+                    if (c.msg == "success") {
+                        toastLog("蓝狐登录成功")
+                        token = c.token
+                        break;
+                    } else {
+                        toastLog("蓝狐登录失败===>" + b)
                     }
                 } else {
-                    toastLog("蓝狐获取手机失败===>" + b)
+                    log("蓝狐返回非json" + b)
                 }
             } else {
-                log("蓝狐返回非json" + b)
+                toastLog("蓝狐返回服务器出错")
             }
-        } else {
-            toastLog("蓝狐服务器出错")
+            sleep(3000)
+            i++;
+            if (i == 10) {
+                return false;
+            }
         }
-        sleep(1000)
-        i++;
-        if (i >= 20) {
-            return null;
+        i = 0
+        http.__okhttp__.setTimeout(10000)
+        lj = "http://www.huli667.com:81/sms/api/getPhone?token=" + token + "&sid=" + 项目id
+        while (1) {
+            // log("链接====>>"+lj)
+            a = http.get(lj)
+            if (a != null && a.statusCode == "200") {
+                if (a.body != null) {
+
+                    var b = a.body.string()
+
+                    if (b != null && except(b)) {
+                        var c = JSON.parse(b)
+                        if (c.msg == "success") {
+                            手机号 = c.phone
+                            log("蓝狐号码获取成功====>" + 手机号)
+                            break;
+                        } else if (c.msg == "暂无号码请延迟10秒后再次请求") {
+                            for (let i = 6 - 1; i >= 0; i--) {
+                                toast("延迟" + i + "次后获取号码");
+                                sleep(2000);
+                            }
+                        } else {
+                            toastLog("蓝狐获取手机失败===>" + b)
+                        }
+                    } else {
+                        log("蓝狐返回非json" + b)
+                    }
+                } else {
+
+                    toastLog("蓝狐返回服务器出错" + a.body)
+                }
+            } else {
+                toastLog("蓝狐服务器出错")
+            }
+            sleep(1000)
+            i++;
+            if (i == 20) {
+                return false;
+            }
         }
+
+    } catch (e) {
+        log("蓝狐方法错误=======>>>" + e);
+        return false;
     }
 }
 
 function 蓝狐短信() {
     验证码 = null
-    let i = 0
+    var i = 0
     var aa
-    let lj = "http://www.huli667.com:81/sms/api/getMessage?token=" + token + "&sid=" + 项目id + "&phone=" + 手机号 + "&tid=17175"
-    while (1) {
-        aa = http.get(lj)
-        if (aa != null) {
-            var b = aa.body.string()
-            if (except(b)) {
-                var c = JSON.parse(b)
-                if (c.msg == "success") {
-                    //log("====>>" + c.sms)
-                    log("=开始解析===>>")
-                    var patt1 = /[0-9]+/
-                    验证码 = patt1.exec(c.sms)
+    try {
+        http.__okhttp__.setTimeout(10000)
+        let lj = "http://www.huli667.com:81/sms/api/getMessage?token=" + token + "&sid=" + 项目id + "&phone=" + 手机号 + "&tid=17175"
+        while (1) {
+            aa = http.get(lj)
+            if (aa != null) {
 
-                    toastLog("验证码====>" + 验证码)
-                    加黑(1)
-                    return true;
+                if (aa.body != null) {
+                    var b = aa.body.string()
+                    if (except(b)) {
+                        var c = JSON.parse(b)
+                        if (c.msg == "success") {
+                            //log("====>>" + c.sms)
+                            log("=开始解析===>>")
+                            var patt1 = /[0-9]+/
+                            验证码 = patt1.exec(c.sms)
+
+                            toastLog("验证码====>" + 验证码)
+                            加黑(1)
+                            return true;
+                        } else {
+                            toast((20 - i) + "获取===>" + c.msg)
+                        }
+                    } else {
+                        log("蓝狐返回非json" + b)
+                    };
                 } else {
-                    toastLog((20 - i) + "获取===>" + c.msg)
+
+                    toastLog("蓝狐返回服务器出错" + aa.body)
                 }
+
             } else {
-                log("蓝狐返回非json" + b)
-            };
-        } else {
-            toastLog("蓝狐返回服务器出错")
+                toastLog("蓝狐返回服务器出错")
+            }
+            sleep(3000)
+            i++;
+            if (i == 15) {
+                加黑(1)
+                return false;
+            }
         }
-        sleep(3000)
-        i++;
-        if (i >= 20) {
-            加黑(1)
-            return null;
-        }
+    } catch (e) {
+        log("蓝狐短信方法错误=======>>>" + e);
+        return false;
     }
 }
 
@@ -2065,58 +2246,74 @@ function bezier_curves(cp, t) {
 };
 
 function 取图() {
-    captureScreen("/sdcard/1.png")
-    let 范围
-    w = text("captcha verify").findOne()
-    if (w != null) {
-        范围 = w.child(0).child(1).child(0).bounds().toString()
+    try {
+        log("开始截图")
+        captureScreen("/sdcard/1.png")
+        let 范围
+        w = text("captcha verify").findOne()
+        if (w != null) {
+            范围 = w.child(0).child(1).child(0).bounds().toString()
+        }
+        var 左上角坐标 = 范围.split("(")[1].split(")")[0].split("-")[0].split(",")
+        var 右下角坐标 = 范围.split("(")[1].split(")")[0].split("-")[1].split(",")
+        var 左上x = 左上角坐标[0].replace(/^\s+|\s+$/g, "")
+        var 左上y = 左上角坐标[1].replace(/^\s+|\s+$/g, "")
+        var 右下x = 右下角坐标[0].replace(/^\s+|\s+$/g, "")
+        var 右下y = 右下角坐标[1].replace(/^\s+|\s+$/g, "")
+        // var 左上x = 126
+        // var 左上y = 628
+        // var 右下x = 954
+        // var 右下y = 1198
+        var 图片 = images.read("/sdcard/1.png")
+
+        var 需打码图片 = images.clip(图片, 左上x, 左上y, 右下x - 左上x, 右下y - 左上y)
+        images.save(需打码图片, "/sdcard/验证码.png")
+        return true;
+        log("截图完成")
+
+    } catch (e) {
+        // 出现异常返回null
+        log(e);
+        return false;
     }
-    var 左上角坐标 = 范围.split("(")[1].split(")")[0].split("-")[0].split(",")
-    var 右下角坐标 = 范围.split("(")[1].split(")")[0].split("-")[1].split(",")
-    var 左上x = 左上角坐标[0].replace(/^\s+|\s+$/g, "")
-    var 左上y = 左上角坐标[1].replace(/^\s+|\s+$/g, "")
-    var 右下x = 右下角坐标[0].replace(/^\s+|\s+$/g, "")
-    var 右下y = 右下角坐标[1].replace(/^\s+|\s+$/g, "")
-
-    // var 左上x = 126
-    // var 左上y = 628
-    // var 右下x = 954
-    // var 右下y = 1198
-
-    var 图片 = images.read("/sdcard/1.png")
-
-    var 需打码图片 = images.clip(图片, 左上x, 左上y, 右下x - 左上x, 右下y - 左上y)
-
-    images.save(需打码图片, "/sdcard/验证码.png")
 }
-
-
-
 
 
 function 截图权限() {
 
-    let 截图 = threads.start(function () {
-        //在新线程执行的代码
-        for (let i = 10 - 1; i >= 0; i--) {
-            w = text("立即开始").findOne(100)
-            if (w != null) {
-                w.click();
-                log("点击成功");
-                break;
-            }
-            sleep(1000);
-        }
-    });
-    if (!requestScreenCapture()) {
-        toastLog("请求截图失败,程序即将退出");
-        RNAutojsModule.setScriptStat("执行失败，已退出");
-        exit();
-    } else {
-        log("截图权限申请成功");
-        截图 && 截图.isAlive() && 截图.interrupt();
+    try {
+        // 捕捉所有异常
 
+
+        log("开始申请截图权限")
+        let 截图 = threads.start(function () {
+            //在新线程执行的代码
+            for (let i = 15 - 1; i >= 0; i--) {
+                w = text("立即开始").findOne(1)
+                if (w != null) {
+                    w.click();
+                    log("截图权限点击成功");
+                    break;
+                }
+                toast("没找到开始")
+                sleep(2000);
+            }
+        });
+
+
+        if (!requestScreenCapture()) {
+            toastLog("请求截图失败,程序即将退出");
+            RNAutojsModule.setScriptStat("执行失败，已退出");
+            exit();
+        } else {
+            log("截图权限申请成功");
+            截图 && 截图.isAlive() && 截图.interrupt();
+        }
+    } catch (e) {
+        log("截图权限方法错误=======>>>" + e);
+        return false;
     }
+
 
 
 }
@@ -2124,13 +2321,16 @@ function 截图权限() {
 
 
 function getCode(username, password, img, laid) {
-    http.__okhttp__.setTimeout(3e4);
-    var r = images.toBase64(img, format = "png"),
-        i = device.release,
-        c = device.model,
-        s = device.buildId;
+
     try {
-        var n = http.postJson("http://v2-no-secure-api.jsdama.com/upload", {
+        log("开始打码")
+        http.__okhttp__.setTimeout(3e4);
+        var r = images.toBase64(img, format = "png"),
+            i = device.release,
+            c = device.model,
+            s = device.buildId;
+
+        var n = http.postJson("https://v2-api.jsdama.com/upload", {
             softwareId: 10580,
             softwareSecret: "joO2shbsXf5Fr61mRT4Td3eCh2rgpJsLk75tuPFl",
             username: username,
@@ -2146,51 +2346,63 @@ function getCode(username, password, img, laid) {
             }
         });
     } catch (e) {
-        return {
-            code: "-1",
-            msg: "网络链接超时...",
-            data: {}
-        };
+        log(e)
+        log("报错了")
+        return false;
+
     }
-    var d = n.body.json(),
-        p = d.code,
-        m = d.message;
-    if ("10079009" == p) return {
-        code: p,
-        msg: m,
-        data: {}
-    };
-    if ("10142006" == p) return {
-        code: p,
-        msg: m,
-        data: {}
-    };
-    if ("10142004" == p) return {
-        code: p,
-        msg: m,
-        data: {}
-    };
-    if ("10142005" == p) return {
-        code: p,
-        msg: m,
-        data: {}
-    };
-    if ("10079006" == p) return {
-        code: p,
-        msg: m,
-        data: {}
-    };
-    if ("0" == p) {
-        return {
-            code: p,
-            msg: m,
-            data: {
-                res: d.data.recognition
+    try {
+        if (n != null) {
+            if (n.body != null) {
+                var d = n.body.json(),
+                    p = d.code,
+                    m = d.message;
+                if ("10079009" == p) return {
+                    code: p,
+                    msg: m,
+                    data: {}
+                };
+                if ("10142006" == p) return {
+                    code: p,
+                    msg: m,
+                    data: {}
+                };
+                if ("10142004" == p) return {
+                    code: p,
+                    msg: m,
+                    data: {}
+                };
+                if ("10142005" == p) return {
+                    code: p,
+                    msg: m,
+                    data: {}
+                };
+                if ("10079006" == p) return {
+                    code: p,
+                    msg: m,
+                    data: {}
+                };
+                if ("0" == p) {
+                    return {
+                        code: p,
+                        msg: m,
+                        data: {
+                            res: d.data.recognition
+                        }
+                    };
+                }
+                return false;
             }
-        };
+
+        }
+    } catch (e) {
+        log("联众打码方法错误=======>>>" + e);
+        return false;
     }
-    return d;
+
+    return false;
 }
+
 
 
 function except(str) {
@@ -2209,73 +2421,82 @@ function except(str) {
 
 
 function WIFI() {
-    device.setBrightnessMode(checked ? 1 : 0);
-    console.info("打开WIFI界面")
-    while (1) {
-        let intent = new Intent();
-        //辅助功能
-        intent.setAction("android.settings.WIFI_SETTINGS");
-        app.startActivity(intent);
-        sleep(2000)
-        if (text("WLAN").exists()) {
 
-            break;
-        }
-        toast("等待打开WiFi界面")
-        sleep(1000)
-    }
-    let i = 0
-    while (true) {
-        i++;
-        if (i >= 15) {
-            if (text("开启").exists()) {
-                text("开启").click()
-                log("---开启wifi")
-                i = 0
+    try {
+        device.setBrightnessMode(checked ? 1 : 0);
+        console.info("打开WIFI界面")
+        while (1) {
+            let intent = new Intent();
+            //辅助功能
+            intent.setAction("android.settings.WIFI_SETTINGS");
+            app.startActivity(intent);
+            sleep(2000)
+            if (text("WLAN").exists()) {
+
+                break;
             }
+            toast("等待打开WiFi界面")
+            sleep(1000)
         }
-        if (text("关闭").exists()) {
+        let i = 0
+        while (true) {
+            i++;
+            if (i >= 15) {
+                if (text("开启").exists()) {
+                    text("开启").click()
+                    log("---开启wifi")
+                    i = 0
+                }
+            }
+            if (text("关闭").exists()) {
 
-            text("关闭").findOne().click()
+                text("关闭").findOne().click()
 
-            log("打开wifi")
+                log("打开wifi")
+                sleep(2000)
+            }
+            if (text("已连接").exists()) {
+                log("wifi已连接")
+                return true;
+            }
+            toast("等待wifi链接成功" + (15 - i))
             sleep(2000)
         }
-        if (text("已连接").exists()) {
-            log("wifi已连接")
-            return true;
-        }
-        toast("等待wifi链接成功" + (15 - i))
-        sleep(2000)
+    } catch (e) {
+        log("wifi方法错误=======>>>" + e);
+        return false;
     }
 
 
 };
 
 function 上传到库() {
-
-    // //Dim 账号 = URL.Get("http://127.0.0.1:1990/uploadNumberInfo?accountNumber=0&password=0&nickName=" &昵称& "&phoneNumber=" &手机号& "&warehouseNum=" &库号& "&id=" &imei& "&type=1&city="&city&"&state=0",40)
-    while (true) {
-        launch(weigou);
-
-        let lianjie = "http://127.0.0.1:1990/uploadNumberInfo?accountNumber=0&password=0&nickName=" + 昵称 + "&phoneNumber=" + 手机号 + "&warehouseNum=" + 库号 + "&id=" + wid + "&type=1&city=全国&state=0"
-        log("访问===>>" + lianjie);
-        let get_api = (http.get(lianjie));
-        if (get_api == null) {
-            log("操作失败");
-        } else if (get_api.statusCode == 200) {
-            let get_api_json = get_api.body.json();
-            if (get_api_json.message == "操作成功") {
-                log("上传到库message===>" + get_api_json.message);
-                home();
-                return true;
+    try {
+        // //Dim 账号 = URL.Get("http://127.0.0.1:1990/uploadNumberInfo?accountNumber=0&password=0&nickName=" &昵称& "&phoneNumber=" &手机号& "&warehouseNum=" &库号& "&id=" &imei& "&type=1&city="&city&"&state=0",40)
+        while (true) {
+            launch(weigou);
+            let lianjie = "http://127.0.0.1:1990/uploadNumberInfo?accountNumber=0&password=0&nickName=" + 昵称 + "&phoneNumber=" + 手机号 + "&warehouseNum=" + 库号 + "&id=" + wid + "&type=1&city=全国&state=0"
+            log("访问===>>" + lianjie);
+            let get_api = (http.get(lianjie));
+            if (get_api == null) {
+                log("操作失败");
+            } else if (get_api.statusCode == 200) {
+                let get_api_json = get_api.body.json();
+                if (get_api_json.message == "操作成功") {
+                    log("上传到库message===>" + get_api_json.message);
+                    home();
+                    return true;
+                } else {
+                    log("上传到库message===>" + get_api_json.message);
+                };
             } else {
-                log("上传到库message===>" + get_api_json.message);
+                log("上传到库未知错误");
             };
-        } else {
-            log("上传到库未知错误");
-        };
-        sleep(3000);
+            sleep(3000);
+        }
+    } catch (e) {
+        log("上传到库方法错误=======>>>" + e);
+        return false;
     }
 }
 
@@ -2335,65 +2556,112 @@ function 手机3() {
 }
 
 function 下载解压脚本() {
-    while (1) {
-        let github下载的脚本 = 下载Github文件() //这个方法返回的就是要运行的代码
-        if (github下载的脚本) {
-            if (files.createWithDirs(files.cwd() + "/autojs/66-master/main.js")) {
-                log("下载失败")
-                sleep(2000)
-            } else {
-                log("下载成功")
-                if (files.copy(files.cwd() + "/autojs/66-master/main.js", engines.myEngine().cwd() + "/main.js")) {
-                    // log("移动成功")
-                    files.removeDir(files.cwd() + "/autojs")
-                    files.remove(files.cwd() + "/autojs.zip")
-                    log("================================>>>>>>>>>>>>"+engines.execScriptFile(engines.myEngine().cwd() + "/main.js"));
-                    log("更新版本完成");
-                    sleep(2000);
-                    files.write("/sdcard/ljl/1.txt", 后台版本);
-                    当前版本 = files.read("/sdcard/ljl/1.txt", encoding = "UTF-8");
-                    log(当前版本)
-                    console.hide();
-                    exit();
+
+    try {
+        while (1) {
+            let github下载的脚本 = 下载Github文件() //这个方法返回的就是要运行的代码
+            if (github下载的脚本) {
+                if (files.createWithDirs(files.cwd() + "/autojs/66-master/main.js")) {
+                    log("下载失败")
+                    sleep(2000)
                 } else {
-                    log("移动失败")
+                    log("下载成功")
+                    if (files.copy(files.cwd() + "/autojs/66-master/main.js", engines.myEngine().cwd() + "/main.js")) {
+                        // log("移动成功")
+                        files.removeDir(files.cwd() + "/autojs")
+                        files.remove(files.cwd() + "/autojs.zip")
+                        log("================================>>>>>>>>>>>>" + engines.execScriptFile(engines.myEngine().cwd() + "/main.js"));
+                        log("更新版本完成");
+                        sleep(2000);
+                        files.write("/sdcard/ljl/1.txt", 后台版本);
+                        当前版本 = files.read("/sdcard/ljl/1.txt", encoding = "UTF-8");
+                        log(当前版本)
+                        console.hide();
+                        return true;
+
+                    } else {
+                        log("移动失败")
+                    }
                 }
-            }
-        } else {
-            console.error('下载代码失败')
-        }
-    }
-    function 下载Github文件() {
-        log("开始下载代码")
-        log(下载链接)
-        let r = http.get(下载链接) //开始请求
-        if (r != null && r.statusCode == 200) {
-            let zipFile = r.body.bytes() //这里下载的是二进制数据 
-            if (zipFile) {
-                let 代码路径 = Github文件夹(zipFile) //将请求成功的文件写入手机路径
-                return true; //读取解压后脚本的内容
             } else {
                 console.error('下载代码失败')
-                return false;
             }
-        } else {
-            console.error('下载代码失败')
         }
-    } 
-    function Github文件夹(zipFile) {
-        let path = files.join(files.cwd(), "autojs.zip") //1、定义文件路径名  2、files.cwd()会返回:  /sdcard/脚本/  3、path=/sdcard/脚本/autojs.zip
-        files.createWithDirs(path) //开始创建文件
-        files.writeBytes(path, zipFile) //把下载好的二进制数据写入文件中
-        let r = 解压zip文件(path) //解压zip文件
-        return r
-    }
-    function 解压zip文件(文件路径) {
-        let 解压后的文件夹路径 = 文件路径.replace(".zip", "") + "/" //利用replace方法将.zip去掉  
-        com.stardust.io.Zip.unzip(new java.io.File(文件路径), new java.io.File(解压后的文件夹路径)) //将zip文件进行解压
-        return 解压后的文件夹路径 //返回解压后的目录   返回对象：r
+
+        function 下载Github文件() {
+            log("开始下载代码")
+            log(下载链接)
+            let r = http.get(下载链接) //开始请求
+            if (r != null && r.statusCode == 200) {
+                let zipFile = r.body.bytes() //这里下载的是二进制数据 
+                if (zipFile) {
+                    let 代码路径 = Github文件夹(zipFile) //将请求成功的文件写入手机路径
+                    return true; //读取解压后脚本的内容
+                } else {
+                    console.error('下载代码失败')
+                    return false;
+                }
+            } else {
+                console.error('下载代码失败')
+            }
+        }
+
+        function Github文件夹(zipFile) {
+            let path = files.join(files.cwd(), "autojs.zip") //1、定义文件路径名  2、files.cwd()会返回:  /sdcard/脚本/  3、path=/sdcard/脚本/autojs.zip
+            files.createWithDirs(path) //开始创建文件
+            files.writeBytes(path, zipFile) //把下载好的二进制数据写入文件中
+            let r = 解压zip文件(path) //解压zip文件
+            return r
+        }
+
+        function 解压zip文件(文件路径) {
+            let 解压后的文件夹路径 = 文件路径.replace(".zip", "") + "/" //利用replace方法将.zip去掉  
+            com.stardust.io.Zip.unzip(new java.io.File(文件路径), new java.io.File(解压后的文件夹路径)) //将zip文件进行解压
+            return 解压后的文件夹路径 //返回解压后的目录   返回对象：r
+        }
+
+    } catch (e) {
+        log("下载解压脚本方法错误=======>>>" + e);
+        return false;
     }
 
 }
+
+function 获取库号() {
+    try {
+        while (1) {
+            let get_api
+            let lianjie = "http://39.97.97.160/no/channel/getChannelLink?userCode=10712";
+            // log("访问===>>" + lianjie);
+            get_api = (http.get(lianjie));
+            if (get_api != null && get_api.statusCode == 200) {
+                let get_api_json = get_api.body.json();
+                // log("返回值====>" + get_api_json.addDatas.resultlist)
+                if (get_api_json.message == "操作成功") {
+                    //log(get_api_json)
+                    let bb = get_api_json.addDatas.result.toString();
+                    let aa = bb.split("----");
+                    return [aa[0], aa[1], aa[2]]
+
+                } else {
+                    log("检测失败");
+                    vpnop(0);
+                };
+            } else {
+                log("检测访问超时或者失败");
+                sleep(3000);
+                vpnop(0);
+            };
+            sleep(3000);
+        }
+    } catch (e) {
+        log("获取库号方法错误=======>>>" + e);
+        return false;
+    }
+
+
+}
+
 // function 更新脚本() {
 //     toastLog("更新版本");
 //     let codePath
