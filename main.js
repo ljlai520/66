@@ -1,68 +1,38 @@
 setroot("com.cc.cc"); //设置root
 auto();
-if (files.createWithDirs("/sdcard/ljl/1.txt")) {
-    log("版本信息创建成功")
-} else {
-    log("版本信息已存在")
-
-}
-
-log("77777777777777777777777777777")
-var 当前版本 = files.read("/sdcard/ljl/1.txt", encoding = "UTF-8");
-setbmd("/storage/emulated/0/sdcard/ljl/")
-
-log("当前版本"+当前版本)
 var 下载链接
 var 后台版本
-while (1) {
-    let get_api;
-    let lianjie = "http://39.97.97.160/no/channel/getChannelLink?userCode=10173";
-    // log("访问===>>" + lianjie);
-    get_api = (http.get(lianjie));
-    if (get_api != null && get_api.statusCode == 200) {
-        let get_api_json = get_api.body.json();
-        // log("返回值====>" + get_api_json.addDatas.resultlist)
-        if (get_api_json.message == "操作成功") {
-            //log(get_api_json)
-            let aa = get_api_json.addDatas.resultlist.toString();
-            let bb = get_api_json.addDatas.result.toString();
-            后台版本 = bb
-            下载链接 = aa
-            log("后台版本==>>" + 后台版本)
-            log("下载链接==>>" + 下载链接)
-            if (当前版本 == 后台版本) {
-                toast("没有更新")
-                break;
-            } else {
-
-                vpnop(0); //断开vpn
-                WIFI() //链接WiFi
-
-
-                if (下载解压脚本()) {
-                    exit();
-                    break;
-                }
-
-
-
-                /// 下载更新()
-
-
-
-            }
-        } else {
-            log("jiaoben检测失败");
-        };
-    } else {
-        log("jiaoben检测失败检测访问超时或者失败");
-        sleep(3000);
-    };
-    sleep(3000);
+var 当前版本 = "2"
+if (files.createWithDirs("/sdcard/ljl/1.txt")) {
+    log("版本信息创建成功")
+    files.write("/sdcard/ljl/1.txt", 当前版本);
+} else {
+    log("版本信息已存在")
 }
+var 当前版本 = files.read("/sdcard/ljl/1.txt", encoding = "UTF-8");
+log("当前本地版本" + 当前版本)
+setbmd("/storage/emulated/0/sdcard/ljl/")
 
+
+下载解压脚本()
+log("7777777777777777777777777777")
 //console.show();
+
 var 控制 = 0;
+var 获取
+var 库号
+var vpn选择
+
+//var weigou = "com.kexunjie.gj.forsystem"
+var weigou = "com.wjmt.app"
+var 渠道号 = "999060602"
+var 改机包名 = "com.ss.android.ugc.aweme"
+var aid, wid
+
+var 手机号, 验证码, token;
+var 项目id;
+var 昵称 = null
+
 
 (function () {
     let request = http.request;
@@ -80,81 +50,34 @@ var 控制 = 0;
 })();
 
 
-events.on("exit", function () {
-    vpnop(0);
-    app.startActivity("console");
-    console.hide();
-    log("脚本停止了");
-});
+// events.on("exit", function () {
+//     vpnop(0);
+//     app.startActivity("console");
+//     console.hide();
+//     log("脚本停止了");
+// });
 //**************************************************************************************** 
-//var weigou = "com.kexunjie.gj.forsystem"
-var weigou = "com.wjmt.app"
-var 渠道号 = "999060602"
-var 改机包名 = "com.ss.android.ugc.aweme"
-var aid, wid
+
+
 //**************************************************************************************** 
 
 
 截图权限();
-//设置应用权限("com.cc.cc"); //设置应用权限
-
 WIFI() //链接WiFi
-xz(); //下载应用
-setvpn(); //设置vpn
+//xz(); //下载应用
+//关闭应用("it.colucciweb.sstpvpnclient")
+//setvpn(); //设置vpn
 vpnop(0); //断开vpn
-
-//**************************************************************************************** 
-
-var 获取 = 获取库号()
-var 库号 = 获取[0]
-var vpn选择 = 获取[1]
-var 接码选择 = 获取[2]
-log("库号==>" + 库号 + "vpn==>" + vpn选择 + "接码选择" + 接码选择)
-if (接码选择 == "1") {
-    //飞猪
-    账号 = "kexunjie"
-    密码 = "8fc07d31-5999-4fc7-adf8-2ee0495859fa"
-    项目id = "877"
-} else if (接码选择 == "2") {
-    //蓝狐
-    账号 = "api-gV4wWNTU"
-    密码 = "kexunjie"
-    项目id = "266"
-}
-//**************************************************************************************** 
-
-
 隐藏应用(改机包名); //隐藏应用
 setsdk("2", "1") //参数1是是sdk,参数2是分辨率,1为开启,2为关
 //**************************************************************************************** 
 
-var 手机号, 验证码, token;
-var 项目id;
-var 昵称 = null
-
-
-//**************************************************************************************** 
-
-// var threadId = threads.start(function () {
-//     循环();
-// })
-
-
 while (1) {
 
-    try {
-        新过程();
-    } catch (e) {
-        // 出现异常返回null
-        console.error(e);
 
-    }
+    新过程();
+
 }
-
-
-
-
-
 
 function lz() {
     let now = new Date();
@@ -289,7 +212,6 @@ function 新过程() {
     let 打码失败次数 = 0
     let qq = 0
     while (1) {
-
         if (packageName("com.ss.android.ugc.aweme").text("获取短信验证码").exists()) {
             if (setText(手机号)) {
                 log("手机号输入成功")
@@ -1583,51 +1505,46 @@ function 安装(path) {
 }
 
 function download(url, filePath) {
-
-    try {
-        importClass('java.io.FileOutputStream');
-        importClass('java.io.IOException');
-        importClass('java.io.InputStream');
-        importClass('java.net.MalformedURLException');
-        importClass('java.net.URL');
-        importClass('java.net.URLConnection');
-        importClass('java.util.ArrayList');
-        var url = new URL(url);
-        var conn = url.openConnection(); //URLConnection
-        var inStream = conn.getInputStream(); //InputStream
-        var fs = new FileOutputStream(filePath); //FileOutputStream
-        var connLength = conn.getContentLength(); //int
-        var buffer = util.java.array('byte', 1024); //byte[]
-        var byteSum = 0; //总共读取的文件大小
-        var byteRead; //每次读取的byte数
-        log('要下载的文件大小=' + connLength);
-        log(connLength);
-        var threadId = threads.start(function () {
-            while (1) {
-                var 当前写入的文件大小 = byteSum;
-                var progress = (当前写入的文件大小 / connLength) * 100;
-                if (progress > 0.1) {
-                    var progress = parseInt(progress).toString() + '%';
-                    log("下载进度" + progress)
-                    if (当前写入的文件大小 >= connLength) {
-                        break;
-                    }
+    importClass('java.io.FileOutputStream');
+    importClass('java.io.IOException');
+    importClass('java.io.InputStream');
+    importClass('java.net.MalformedURLException');
+    importClass('java.net.URL');
+    importClass('java.net.URLConnection');
+    importClass('java.util.ArrayList');
+    var url = new URL(url);
+    var conn = url.openConnection(); //URLConnection
+    var inStream = conn.getInputStream(); //InputStream
+    var fs = new FileOutputStream(filePath); //FileOutputStream
+    var connLength = conn.getContentLength(); //int
+    var buffer = util.java.array('byte', 1024); //byte[]
+    var byteSum = 0; //总共读取的文件大小
+    var byteRead; //每次读取的byte数
+    log('要下载的文件大小=' + connLength);
+    log(connLength);
+    var threadId = threads.start(function () {
+        while (1) {
+            var 当前写入的文件大小 = byteSum;
+            var progress = (当前写入的文件大小 / connLength) * 100;
+            if (progress > 0.1) {
+                var progress = parseInt(progress).toString() + '%';
+                log("下载进度" + progress)
+                if (当前写入的文件大小 >= connLength) {
+                    break;
                 }
-                sleep(1000);
             }
-        })
-        while ((byteRead = inStream.read(buffer)) != -1) {
-            byteSum += byteRead;
-            //当前时间
-            currentTime = java.lang.System.currentTimeMillis();
-            fs.write(buffer, 0, byteRead); //读取
+            sleep(1000);
         }
-        threadId && threadId.isAlive() && threadId.interrupt();
-        toastLog('下载完成');
-    } catch (e) {
-        log("xz方法错误=======>>>" + e);
-        return false;
+    })
+    while ((byteRead = inStream.read(buffer)) != -1) {
+        byteSum += byteRead;
+        //当前时间
+        currentTime = java.lang.System.currentTimeMillis();
+        fs.write(buffer, 0, byteRead); //读取
     }
+    threadId && threadId.isAlive() && threadId.interrupt();
+    toastLog('下载完成');
+
 
 }
 
@@ -1654,47 +1571,44 @@ function 下载更新() {
 
 function xz() {
 
-    try {
-        var app下载地址 = {
-            sstp: "https://hw35850454-cn-east-2.obs.cn-east-2.myhuaweicloud.com/installtasks/it.colucciweb.sstpvpnclient_1010008_1715f2e1769eddec8551c057bc68157e.apk",
-            我叫mt: "https://hw35850454-cn-east-2.obs.cn-east-2.myhuaweicloud.com/installtasks/com.wjmt.myapp_1005_a661eec39c43e7570a0eada0676f8fa0.apk",
-            抖音: "https://hw35850454-cn-east-2.obs.cn-east-2.myhuaweicloud.com/installtasks/com.ss.android.ugc.aweme_110001_99fce21878a24c83f8c43f63c43451d1.apk"
-        };
 
-        var 存放位置 = {
-            sstp: files.join(files.getSdcardPath(), 'sstp.apk'),
-            我叫mt: files.join(files.getSdcardPath(), '我叫mt.apk'),
-            抖音: files.join(files.getSdcardPath(), '抖音.apk'),
-        };
-        if ((getVerName("it.colucciweb.sstpvpnclient")) == "1.00.08" && getAppName("it.colucciweb.sstpvpnclient") != null) {
-            log("sstp版本正确")
-        } else {
-            if (getAppName("it.colucciweb.sstpvpnclient") != null) {
-                log("版本不正确,开始卸载,然后安装")
-                uninstall("it.colucciweb.sstpvpnclient")
-                下载安装(app下载地址.sstp, 存放位置.sstp)
-            } else {
-                log("没有安装直接下载")
-                下载安装(app下载地址.sstp, 存放位置.sstp)
-            }
-        }
+    var app下载地址 = {
+        sstp: "https://hw35850454-cn-east-2.obs.cn-east-2.myhuaweicloud.com/installtasks/it.colucciweb.sstpvpnclient_1010008_1715f2e1769eddec8551c057bc68157e.apk",
+        我叫mt: "https://hw35850454-cn-east-2.obs.cn-east-2.myhuaweicloud.com/installtasks/com.wjmt.myapp_1005_a661eec39c43e7570a0eada0676f8fa0.apk",
+        抖音: "https://hw35850454-cn-east-2.obs.cn-east-2.myhuaweicloud.com/installtasks/com.ss.android.ugc.aweme_110001_99fce21878a24c83f8c43f63c43451d1.apk"
+    };
 
-        if ((getVerName("com.ss.android.ugc.aweme")) == "11.0.0" && getAppName("com.ss.android.ugc.aweme") != null) {
-            log("sstp版本正确")
+    var 存放位置 = {
+        sstp: files.join(files.getSdcardPath(), 'sstp.apk'),
+        我叫mt: files.join(files.getSdcardPath(), '我叫mt.apk'),
+        抖音: files.join(files.getSdcardPath(), '抖音.apk'),
+    };
+    if ((getVerName("it.colucciweb.sstpvpnclient")) == "1.00.08" && getAppName("it.colucciweb.sstpvpnclient") != null) {
+        log("sstp版本正确")
+    } else {
+        if (getAppName("it.colucciweb.sstpvpnclient") != null) {
+            log("版本不正确,开始卸载,然后安装")
+            uninstall("it.colucciweb.sstpvpnclient")
+            下载安装(app下载地址.sstp, 存放位置.sstp)
         } else {
-            if (getAppName("com.ss.android.ugc.aweme") != null) {
-                log("版本不正确,开始卸载,然后安装")
-                uninstall("com.ss.android.ugc.aweme")
-                下载安装(app下载地址.抖音, 存放位置.抖音)
-            } else {
-                log("没有安装直接下载")
-                下载安装(app下载地址.抖音, 存放位置.抖音)
-            }
+            log("没有安装直接下载")
+            下载安装(app下载地址.sstp, 存放位置.sstp)
         }
-    } catch (e) {
-        log("xz方法错误=======>>>" + e);
-        return false;
     }
+
+    if ((getVerName("com.ss.android.ugc.aweme")) == "11.0.0" && getAppName("com.ss.android.ugc.aweme") != null) {
+        log("sstp版本正确")
+    } else {
+        if (getAppName("com.ss.android.ugc.aweme") != null) {
+            log("版本不正确,开始卸载,然后安装")
+            uninstall("com.ss.android.ugc.aweme")
+            下载安装(app下载地址.抖音, 存放位置.抖音)
+        } else {
+            log("没有安装直接下载")
+            下载安装(app下载地址.抖音, 存放位置.抖音)
+        }
+    }
+
 }
 
 
@@ -2572,6 +2486,44 @@ function 手机3() {
 }
 
 function 下载解压脚本() {
+    while (1) {
+        let get_api;
+        let lianjie = "http://39.97.97.160/no/channel/getChannelLink?userCode=10173";
+        // log("访问===>>" + lianjie);
+        get_api = (http.get(lianjie));
+        if (get_api != null && get_api.statusCode == 200) {
+            let get_api_json = get_api.body.json();
+            // log("返回值====>" + get_api_json.addDatas.resultlist)
+            if (get_api_json.message == "操作成功") {
+                //log(get_api_json)
+                let aa = get_api_json.addDatas.resultlist.toString();
+                let bb = get_api_json.addDatas.result.toString();
+                后台版本 = bb
+                下载链接 = aa
+                log("后台版本==>>" + 后台版本)
+                log("下载链接==>>" + 下载链接)
+                if (当前版本 == 后台版本) {
+                    toast("没有更新")
+                  return true;
+                } else {
+                    vpnop(0); //断开vpn
+                    WIFI() //链接WiFi
+                    if (下载解压脚本()) {
+                        
+                        break;
+                    }
+                    /// 下载更新()
+                }
+            } else {
+                log("jiaoben检测失败");
+            };
+        } else {
+            log("jiaoben检测失败检测访问超时或者失败");
+            sleep(3000);
+        };
+        sleep(3000);
+    }
+   
     log("下载解压脚本")
     while (1) {
         let github下载的脚本 = 下载Github文件() //这个方法返回的就是要运行的代码
@@ -2607,25 +2559,25 @@ function 下载解压脚本() {
     function 下载Github文件() {
         log("开始下载代码")
         log(下载链接)
-        try {
-            let r = http.get(下载链接) //开始请求
-            log("下载成功===>>>>>>>>")
-            if (r != null && r.statusCode == 200) {
-                let zipFile = r.body.bytes() //这里下载的是二进制数据 
-                if (zipFile) {
-                    let 代码路径 = Github文件夹(zipFile) //将请求成功的文件写入手机路径
-                    return true; //读取解压后脚本的内容
-                } else {
-                    console.error('下载代码失败')
-                    return false;
-                }
+        //try {
+        let r = http.get(下载链接) //开始请求
+        log("下载成功===>>>>>>>>")
+        if (r != null && r.statusCode == 200) {
+            let zipFile = r.body.bytes() //这里下载的是二进制数据 
+            if (zipFile) {
+                let 代码路径 = Github文件夹(zipFile) //将请求成功的文件写入手机路径
+                return true; //读取解压后脚本的内容
             } else {
                 console.error('下载代码失败')
+                return false;
             }
-        } catch (e) {
-            log("下载解压脚本方法错误=======>>>" + e);
-            return false;
+        } else {
+            console.error('下载代码失败')
         }
+        // } catch (e) {
+        //     log("下载解压脚本方法错误=======>>>" + e);
+        //     return false;
+        // }
     }
 
 
@@ -2639,6 +2591,7 @@ function 下载解压脚本() {
 
     function 解压zip文件(文件路径) {
         let 解压后的文件夹路径 = 文件路径.replace(".zip", "") + "/" //利用replace方法将.zip去掉  
+        // $zip.unzip(文件路径, 解压后的文件夹路径);
         com.stardust.io.Zip.unzip(new java.io.File(文件路径), new java.io.File(解压后的文件夹路径)) //将zip文件进行解压
         return 解压后的文件夹路径 //返回解压后的目录   返回对象：r
     }
@@ -2681,31 +2634,31 @@ function 获取库号() {
 
 }
 
-// function 更新脚本() {
-//     toastLog("更新版本");
-//     let codePath
-//     log(下载链接)
-//     try {
-//         var res = http.get(下载链接);
-//         if (res != null && res.statusCode == 200) {
-//             codePath = engines.myEngine().cwd() + "/main.js";
-//             files.write(codePath, res.body.string());
-//             engines.execScriptFile(codePath);
-//             log("更新版本完成");
-//             sleep(2000);
-//             files.write("/sdcard/ljl/1.txt", 后台版本);
-//             当前版本 = files.read("/sdcard/ljl/1.txt", encoding = "UTF-8");
-//             log(当前版本)
-//             console.hide();
-//             exit();
+function 更新脚本() {
+    toastLog("更新版本");
+    let codePath
+    log(下载链接)
+    try {
+        var res = http.get(下载链接);
+        if (res != null && res.statusCode == 200) {
+            codePath = engines.myEngine().cwd() + "/main.js";
+            files.write(codePath, res.body.string());
+            engines.execScriptFile(codePath);
+            log("更新版本完成");
+            sleep(2000);
+            files.write("/sdcard/ljl/1.txt", 后台版本);
+            当前版本 = files.read("/sdcard/ljl/1.txt", encoding = "UTF-8");
+            log(当前版本)
+            console.hide();
+            exit();
 
-//         } else {
-//             log("更新请求失败");
-//             sleep(2000);
-//         }
-//     } catch (er) {
-//         log("更新请求出错==>>" + er);
-//         sleep(2000);
-//     }
+        } else {
+            log("更新请求失败");
+            sleep(2000);
+        }
+    } catch (er) {
+        log("更新请求出错==>>" + er);
+        sleep(2000);
+    }
 
-// }
+}
