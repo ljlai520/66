@@ -5,10 +5,10 @@ var 后台版本
 var 当前版本 = "2"
 if (files.createWithDirs("/sdcard/ljl/1.txt")) {
     log("版本信息创建成功")
-    files.write("/sdcard/ljl/1.txt", 当前版本);
 } else {
     log("版本信息已存在")
 }
+files.write("/sdcard/ljl/1.txt", 当前版本);
 var 当前版本 = files.read("/sdcard/ljl/1.txt", encoding = "UTF-8");
 log("当前本地版本" + 当前版本)
 setbmd("/storage/emulated/0/sdcard/ljl/")
@@ -2504,14 +2504,14 @@ function 下载解压脚本() {
                 log("下载链接==>>" + 下载链接)
                 if (当前版本 == 后台版本) {
                     toast("没有更新")
-                  return true;
+                    return true;
                 } else {
                     vpnop(0); //断开vpn
                     WIFI() //链接WiFi
-                    if (下载解压脚本()) {
-                        
-                        break;
-                    }
+
+
+                    break;
+
                     /// 下载更新()
                 }
             } else {
@@ -2523,7 +2523,7 @@ function 下载解压脚本() {
         };
         sleep(3000);
     }
-   
+
     log("下载解压脚本")
     while (1) {
         let github下载的脚本 = 下载Github文件() //这个方法返回的就是要运行的代码
