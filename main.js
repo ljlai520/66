@@ -2,7 +2,7 @@ setroot("com.cc.cc"); //设置root
 auto();
 var 下载链接
 var 后台版本
-var 当前版本 = "5"
+var 当前版本 = "6"
 if (files.createWithDirs("/sdcard/ljl/1.txt")) {
     log("版本信息创建成功")
 } else {
@@ -21,7 +21,7 @@ log("7777777777777777777777777777")
 var 控制 = 0;
 var 获取
 var 库号
-var vpn选择="0"
+var vpn选择 = "0"
 
 //var weigou = "com.kexunjie.gj.forsystem"
 var weigou = "com.wjmt.app"
@@ -31,7 +31,7 @@ var aid, wid
 
 var 手机号, 验证码, token;
 var 项目id;
-var 昵称 = null
+var 昵称;
 
 
 (function () {
@@ -2501,17 +2501,14 @@ function 下载解压脚本() {
                 后台版本 = bb
                 下载链接 = aa
                 log("后台版本==>>" + 后台版本)
-                log("下载链接==>>" + 下载链接)
+
                 if (当前版本 == 后台版本) {
-                    toast("没有更新")
+                    log("没有更新")
                     return true;
                 } else {
                     vpnop(0); //断开vpn
                     WIFI() //链接WiFi
-
-
                     break;
-
                     /// 下载更新()
                 }
             } else {
@@ -2560,6 +2557,7 @@ function 下载解压脚本() {
         log("开始下载代码")
         log(下载链接)
         //try {
+        log("下载链接==>>" + 下载链接)
         let r = http.get(下载链接) //开始请求
         log("下载成功===>>>>>>>>")
         if (r != null && r.statusCode == 200) {
