@@ -30,26 +30,30 @@ while (1) {
             log("下载链接==>>" + 下载链接)
             if (当前版本 == 后台版本) {
                 toast("没有更新")
+                break;
             } else {
 
                 vpnop(0); //断开vpn
                 WIFI() //链接WiFi
 
 
-                下载解压脚本();
+                if (下载解压脚本()) {
+                    exit();
+                    break;
+                }
 
 
 
                 /// 下载更新()
 
-                break;
+
 
             }
         } else {
-            log("检测失败");
+            log("jiaoben检测失败");
         };
     } else {
-        log("检测访问超时或者失败");
+        log("jiaoben检测失败检测访问超时或者失败");
         sleep(3000);
     };
     sleep(3000);
@@ -2566,8 +2570,7 @@ function 手机3() {
 }
 
 function 下载解压脚本() {
-
-
+    log("下载解压脚本")
     while (1) {
         let github下载的脚本 = 下载Github文件() //这个方法返回的就是要运行的代码
         if (github下载的脚本) {
