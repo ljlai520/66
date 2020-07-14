@@ -10,6 +10,8 @@ if (files.createWithDirs("/sdcard/ljl/1.txt")) {
 log("77777777777777777777777777777")
 var 当前版本 = files.read("/sdcard/ljl/1.txt", encoding = "UTF-8");
 setbmd("/storage/emulated/0/sdcard/ljl/")
+
+log("当前版本"+当前版本)
 var 下载链接
 var 后台版本
 while (1) {
